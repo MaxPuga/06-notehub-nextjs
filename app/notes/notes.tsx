@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useDebouncedCallback } from "use-debounce";
 
-import { fetchNotes } from "../../services/noteService";
+import { fetchNotes } from "@/lib/api";
 
 import SearchBox from "../../components/SearchBox/SearchBox";
 import NoteList from "../../components/NoteList/NoteList";
@@ -43,8 +43,8 @@ export default function App() {
         {data && data.totalPages > 1 && (
           <Pagination
             totalPages={data.totalPages}
-            page={page}
-            onChange={setPage}
+            currentPage={page}
+            onPageChange={setPage}
           />
         )}
 
