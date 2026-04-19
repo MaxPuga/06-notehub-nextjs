@@ -16,7 +16,6 @@ export default function NotesClient() {
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
-  // 🔥 debounce
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(search);
@@ -32,8 +31,6 @@ export default function NotesClient() {
     placeholderData: (prev) => prev,
     refetchOnMount: false,
   });
-
-  //
 
   const notes = data?.notes || [];
 
