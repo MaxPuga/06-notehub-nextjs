@@ -33,6 +33,8 @@ export default function NotesClient() {
     refetchOnMount: false,
   });
 
+  //
+
   const notes = data?.notes || [];
 
   return (
