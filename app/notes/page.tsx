@@ -1,40 +1,22 @@
-"use client";
-
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import {
+  QueryClient,
+  dehydrate,
+  HydrationBoundary,
+} from "@tanstack/react-query";
 import { fetchNotes } from "@/lib/api";
+import NotesClient from "./Notes.client";
 
-import NoteList from "@/components/NoteList/NoteList";
-import SearchBox from "@/components/SearchBox/SearchBox";
-import Pagination from "@/components/Pagination/Pagination";
+export default async function NotesPage() {
+  const queryClient = new QueryClient();
 
-export default function NotesPage() {
-  const [page, setPage] = useState(1);
-  const [search, setSearch] = useState("");
-
-  const { data, isLoading } = useQuery({
-    queryKey: ["notes", page, search],
-    queryFn: () => fetchNotes({ page, perPage: 12, search }),
-    placeholderData: (prev) => prev,
+  await queryClient.prefetchQuery({
+    queryKey: ["notes", 1, ""],
+    queryFn: () => fetchNotes({ page: 1, perPage: 12, search: "" }),
   });
 
-  const notes = data?.notes || [];
-
   return (
-    <div>
-      <SearchBox onSearch={setSearch} />
-
-      {data?.totalPages > 1 && (
-        <Pagination
-          totalPages={data.totalPages}
-          page={page}
-          onChange={setPage}
-        />
-      )}
-
-      {isLoading && <p>Loading...</p>}
-
-      {notes.length > 0 && <NoteList notes={notes} />}
-    </div>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <NotesClient />
+    </HydrationBoundary>
   );
 }
