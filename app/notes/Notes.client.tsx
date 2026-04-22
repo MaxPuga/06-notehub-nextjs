@@ -9,6 +9,7 @@ import Pagination from "@/components/Pagination/Pagination";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import Modal from "@/components/Modal/Modal";
 import NoteForm from "@/components/NoteForm/NoteForm";
+import css from "./page.module.css";
 
 export default function NotesClient() {
   const [page, setPage] = useState(1);
@@ -35,18 +36,22 @@ export default function NotesClient() {
   const notes = data?.notes || [];
 
   return (
-    <div>
-      <SearchBox onSearch={setSearch} />
+    <div className={css.app}>
+      <header className={css.toolbar}>
+        <SearchBox onSearch={setSearch} />
 
-      <button onClick={() => setIsOpen(true)}>Create note</button>
+        {data && data.totalPages > 1 && (
+          <Pagination
+            totalPages={data.totalPages}
+            currentPage={page}
+            onPageChange={setPage}
+          />
+        )}
 
-      {data && data.totalPages > 1 && (
-        <Pagination
-          totalPages={data.totalPages}
-          currentPage={page}
-          onPageChange={setPage}
-        />
-      )}
+        <button className={css.button} onClick={() => setIsOpen(true)}>
+          Create note
+        </button>
+      </header>
 
       {isLoading && <p>Loading...</p>}
 

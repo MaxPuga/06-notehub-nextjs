@@ -8,7 +8,7 @@ import SearchBox from "../../components/SearchBox/SearchBox";
 import NoteList from "../../components/NoteList/NoteList";
 import Pagination from "../../components/Pagination/Pagination";
 
-import css from "./App.module.css";
+import css from "./page.module.css";
 import Modal from "../../components/Modal/Modal";
 import NoteForm from "../../components/NoteForm/NoteForm";
 
